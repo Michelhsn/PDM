@@ -33,5 +33,13 @@
         android:text="@string/a_campainha_da_sua_casa_est_tocando"
         />
 
+    <Button
+        android:id="@+id/buttonConfig"
+        android:onClick="telaConfiguracoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Configurações" />
+
 
 </RelativeLayout>

@@ -16,7 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +45,26 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, ex.getMessage());
         }
     }
+
+    public ArrayList<String> listaOpcoesIniciais(){
+        ArrayList<String> dados = new ArrayList<String>();
+        dados.add("Vibração");
+        dados.add("Iluminação");
+        dados.add("Conexão");
+        return dados;
+    }
+   public void telaConfiguracoes(View v){
+        //setContentView(R.layout.tela_config);
+       //ListView listaConfig = (ListView) findViewById(R.id.lv_configs);
+
+      //ArrayList<String> opcoes = listaOpcoesIniciais();
+      //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, opcoes);
+       // listaConfig.setAdapter(arrayAdapter);
+
+        Intent intent = new Intent(getApplicationContext(), Config.class);
+        startActivity(intent);
+
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    // TODO Auto-generated method stub
-
                     TextView updatedField = (TextView)
                             findViewById(R.id.updated_field);
                     updatedField.setText(tempSensorMessage);
@@ -94,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Método padrão para criar notificação, adição do setVibrate
     public void createNotification(String notificationTitle,
                                    String notificationMessage) {
         NotificationCompat.Builder mBuilder =
@@ -103,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                         .setContentText(notificationMessage);
 
 
-        mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+        mBuilder.setVibrate(new long[] { 0000, 500, 500, 500, 500, 500, 500, 500, 500 });
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(getApplicationContext(),
                 MainActivity.class);
@@ -112,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         // stack for the started Activity. This ensures that navigating
         // backward from the Activity leads out of your application to the
         // Home screen.
+        // Voltar pra home no back
         TaskStackBuilder stackBuilder =
                 TaskStackBuilder.create(getApplicationContext());
 

@@ -45,8 +45,7 @@ public class MQTTClient {
         client.subscribe(mqttTopic, 0);
     }
 
-    // Implementation of the MqttCallback.messageArrived method, which is invoked whenever a
-    // new message is published to the topic “codifythings/intrusiondetection”.
+    // Mensagem publicada no topic
     private class MqttEventCallback implements MqttCallback {
         @Override
         public void connectionLost(Throwable arg0) {
