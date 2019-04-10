@@ -73,17 +73,25 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // CLICK OPTION LISTENER
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-
-
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings :
+                setContentView(R.layout.activity_config);
+                return true;
         }
+        return false;
 
-        return super.onOptionsItemSelected(item);
+//        int id = item.getItemId();
+//
+//
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
     }
 
 
