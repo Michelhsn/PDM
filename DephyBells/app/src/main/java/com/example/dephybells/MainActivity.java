@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.e(TAG, ex.getMessage());
         }
+
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     public ArrayList<String> listaOpcoesIniciais(){
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_settings :
-                setContentView(R.layout.activity_config);
+                setContentView(R.layout.activity_vibracao);
                 return true;
         }
         return false;
