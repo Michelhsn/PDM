@@ -30,29 +30,27 @@ public class MQTTClient {
 
     public void connectToMQTT() throws MqttException {
 
-        Log.i(TAG, "Setting Connection Options");
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(true);
 
 
-        Log.i(TAG, "Creating New Client");
         MqttClient client = new MqttClient(mqttBroker, deviceId, new MemoryPersistence());
         client.connect(options);
 
-
-        Log.i(TAG, "Subscribing to Topic");
+        // Verificar o callback
         client.setCallback(new MqttEventCallback());
 
+        // Assinatura
         client.subscribe(mqttTopic, 0);
     }
 
+
+    // Avaliar tempo de request, tentar mover método
     public void publishToMQTT() throws MqttException {
-        // Request clean session in the connection options.
-        Log.i(TAG, "Setting Connection Options");
+        // clean session
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(true);
 
-        Log.i(TAG, "Creating New Client");
         MqttClient client = new MqttClient(mqttBroker, deviceIdLed,
                 new MemoryPersistence());
         client.connect(options);
@@ -60,10 +58,12 @@ public class MQTTClient {
         Log.i(TAG, "Publishing to Topic");
         MqttMessage mqttMessage =
                 new MqttMessage(messageContent.getBytes());
-        mqttMessage.setQos(2);
+
+        // Ver impacto do qos
+        mqttMessage.setQos(1);
         client.publish(mqttTopicLed, mqttMessage);
-        Log.i(TAG, "Publishing Complete");
-        Log.i(TAG, "Disconnecting from MQTT");
+
+        // Verificar condição para disconect
         client.disconnect();
     }
 
@@ -81,7 +81,6 @@ public class MQTTClient {
 
         @Override
         public void messageArrived(String topic, final MqttMessage msg) throws Exception {
-            Log.i(TAG, "New Message Arrived from Topic - " + topic);
 
             try {
 

@@ -19,17 +19,14 @@ void pisca(int duracao, int vezes) {
 
 void turnLightsOnOff()
 {
-// Check if lights are currently on or off
 if(digitalRead(pinoLed) == LOW)
 {
 //Turn lights on
-Serial.println("[INFO] Turning lights on");
 digitalWrite(pinoLed, HIGH);
 }
 else
 {
 // Turn lights off
-Serial.println("[INFO] Turning lights off");
 digitalWrite(pinoLed, LOW);
 }
 }
@@ -91,7 +88,7 @@ char topicLed[] = {"codifythings/led"};
 
 void callback(char* topic, byte* payload, unsigned int length)
 {
-  Serial.println("[INFO] Tá chegando");
+  //Serial.println("[INFO] Tá chegando");
   String payloadContent = String((char *)payload);
   Serial.println("[INFO] Payload: " + payloadContent);
   // Turn lights on/off
@@ -107,7 +104,7 @@ void publishSensorData()
   // Connect MQTT Broker
   //Serial.println("[INFO] Connecting to MQTT Broker");
 
-  if (pubSubClient.connect("arduinoIoTClient2"))
+  if (pubSubClient.connect("arduinoIoTClient"))
   {
     Serial.println("[INFO] Connection to MQTT Broker Successfull");
 
@@ -152,17 +149,16 @@ void setup()
   // Print connection information
   printConnectionInformation();
 
-  // Calibrate motion sensor
   if (pubSubClient2.connect("arduinoIoTClient"))
   {
-    Serial.println("[INFO] Connection to MQTT Broker Successfull");
+   // Serial.println("[INFO] Connection to MQTT Broker Successfull");
     pubSubClient2.subscribe(topicLed);
     pisca(200,8);
 
   }
   else
   {
-    Serial.println("[INFO] Connection to MQTT Broker Failed");
+    //Serial.println("[INFO] Connection to MQTT Broker Failed");
   }
 }
 
