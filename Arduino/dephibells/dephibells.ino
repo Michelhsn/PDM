@@ -1,8 +1,8 @@
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
 
-const char* ssid = "Michel";
-const char* password = "sedesenv";
+const char* ssid = "GVT-Michel";
+const char* password = "314159265359piMath";
 const int pinoBotao = D7; //PINO DIGITAL UTILIZADO PELO PUSH
 WiFiServer servera(80);
 const int pinoLed = D3; //PINO DIGITAL UTILIZADO PELO LED
@@ -19,16 +19,19 @@ void pisca(int duracao, int vezes) {
 
 void turnLightsOnOff()
 {
-if(digitalRead(pinoLed) == LOW)
-{
-//Turn lights on
-digitalWrite(pinoLed, HIGH);
-}
-else
-{
-// Turn lights off
-digitalWrite(pinoLed, LOW);
-}
+  // Check if lights are currently on or off
+  if (digitalRead(pinoLed) == LOW)
+  {
+    //Turn lights on
+    //Serial.println("[INFO] Turning lights on");
+    digitalWrite(pinoLed, HIGH);
+  }
+  else
+  {
+    // Turn lights off
+    //Serial.println("[INFO] Turning lights off");
+    digitalWrite(pinoLed, LOW);
+  }
 }
 
 void printConnectionInformation()
@@ -91,7 +94,6 @@ void callback(char* topic, byte* payload, unsigned int length)
   //Serial.println("[INFO] Tá chegando");
   String payloadContent = String((char *)payload);
   Serial.println("[INFO] Payload: " + payloadContent);
-  // Turn lights on/off
   turnLightsOnOff();
 }
 
@@ -101,34 +103,26 @@ PubSubClient pubSubClient2(server, port, callback, client);
 
 void publishSensorData()
 {
-  // Connect MQTT Broker
-  //Serial.println("[INFO] Connecting to MQTT Broker");
 
   if (pubSubClient.connect("arduinoIoTClient"))
   {
-    Serial.println("[INFO] Connection to MQTT Broker Successfull");
 
   }
   else
   {
-    Serial.println("[INFO] Connection to MQTT Broker Failed");
   }
 
-  // Publish to MQTT Topic
   if (pubSubClient.connected())
   {
-    Serial.println("[INFO] Publishing to MQTT Broker");
-     pubSubClient.publish(topic, "A campainha da sua casa foi ");
-      Serial.println("[INFO] Publish to MQTT Broker Complete");
-    pisca(600, 2);
+      pubSubClient.publish(topic, "A campainha da sua casa foi ");
+      pisca(600, 2);
   }
   else
   {
-    Serial.println("[ERROR] Publish to MQTT Broker Failed");
-    pisca(100, 4);
+      pisca(100, 4);
   }
 
-  
+
 }
 
 /*****************************************************************************
@@ -146,25 +140,23 @@ void setup()
 
   while (!Serial);
 
-  // Print connection information
   printConnectionInformation();
 
   if (pubSubClient2.connect("arduinoIoTClient"))
   {
-   // Serial.println("[INFO] Connection to MQTT Broker Successfull");
-    pubSubClient2.subscribe(topicLed);
-    pisca(200,8);
+      pubSubClient2.subscribe(topicLed);
+      pisca(200, 8);
 
   }
   else
   {
-    //Serial.println("[INFO] Connection to MQTT Broker Failed");
+      pisca(100, 10);
   }
 }
 
 void loop()
 {
   //Read sensor data
-  readSensorData();
-  pubSubClient2.loop();
+    readSensorData();
+    pubSubClient2.loop();
 }

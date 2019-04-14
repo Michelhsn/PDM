@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Para debug
     private static final String TAG = "MainActivity";
 
     @Override
@@ -50,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public ArrayList<String> listaOpcoesIniciais(){
+    /*public ArrayList<String> listaOpcoesIniciais(){
         ArrayList<String> dados = new ArrayList<String>();
         dados.add("Vibração");
         dados.add("Iluminação");
         dados.add("Conexão");
         return dados;
-    }
+    }*/
    public void telaConfiguracoes(View v){
         //setContentView(R.layout.tela_config);
        //ListView listaConfig = (ListView) findViewById(R.id.lv_configs);
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
       //  ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, opcoes);
        // listaConfig.setAdapter(arrayAdapter);
 
+       // Preferencia contentview ou start?
         Intent intent = new Intent(getApplicationContext(), Config.class);
         startActivity(intent);
 
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            // Settings do toolbar
             case R.id.action_settings :
                 //config();
                 telaConfiguracoes(null);
@@ -114,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
             final String tempSensorMessage = sensorMessage;
 
+            //thread update field
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                         .setContentText(notificationMessage);
 
 
+        // Ver forma melhor de usar vibrate
         mBuilder.setVibrate(new long[] { 0000, 500, 500, 500, 500, 500, 500, 500, 500 });
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(getApplicationContext(),

@@ -78,6 +78,7 @@ public class Config extends AppCompatActivity {
                 } else if(position == 2){
                     try {
                         publishToMQTT();
+                        // Mudança no tempo de resposta??????
                         //new MQTTClient(new MainActivity()).publishToMQTT();
                     } catch (Exception ex) {
 
@@ -103,6 +104,7 @@ public class Config extends AppCompatActivity {
 
     public void publishToMQTT() throws MqttException {
         // clean session
+        // evitar reconectar caso já esteja aberta
         if (client.isConnected()){
             MqttMessage mqttMessage =
                     new MqttMessage(messageContent.getBytes());
@@ -128,7 +130,7 @@ public class Config extends AppCompatActivity {
         }
 
 
-        // Verificar condição para disconect
+        // Verificar condição para disconect!!!
         //client.disconnect();
     }
 

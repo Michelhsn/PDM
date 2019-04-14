@@ -71,12 +71,12 @@ public class MQTTClient {
     private class MqttEventCallback implements MqttCallback {
         @Override
         public void connectionLost(Throwable arg0) {
-            // Do nothing
+
         }
 
         @Override
         public void deliveryComplete(IMqttDeliveryToken arg0) {
-            // Do nothing
+
         }
 
         @Override
