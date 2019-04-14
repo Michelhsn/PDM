@@ -61,7 +61,7 @@ public class Config extends AppCompatActivity {
         ArrayList<String> dados = new ArrayList<String>();
         dados.add("Vibração");
         dados.add("Iluminação");
-        dados.add("Conexão");
+        dados.add("Liga / Desliga");
         return dados;
     }
 
