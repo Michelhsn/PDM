@@ -1,8 +1,8 @@
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
 
-const char* ssid = "GVT-Michel";
-const char* password = "314159265359piMath";
+const char* ssid = "Michel";
+const char* password = "sedesenv";
 const int pinoBotao = D7; //PINO DIGITAL UTILIZADO PELO PUSH
 WiFiServer servera(80);
 const int pinoLed = D3; //PINO DIGITAL UTILIZADO PELO LED
