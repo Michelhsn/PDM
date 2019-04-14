@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
    }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_settings :
-                setContentView(R.layout.activity_vibracao);
+                //config();
+                telaConfiguracoes(null);
                 return true;
         }
         return false;

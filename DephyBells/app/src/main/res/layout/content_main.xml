@@ -26,6 +26,7 @@
 
     <TextView
         android:id="@+id/updated_field"
+        android:textSize="25dp"
         android:layout_width="295dp"
         android:layout_height="150dp"
         android:layout_below="@+id/bell_icon"
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/bell_icon"
         app:layout_constraintVertical_bias="0.292" />
 
-    <Button
+    <!--<Button
         android:id="@+id/buttonConfig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updated_field"
-        app:layout_constraintVertical_bias="0.54" />
+        app:layout_constraintVertical_bias="0.54" />-->
 
     <ImageView
         android:id="@+id/bell_icon"
