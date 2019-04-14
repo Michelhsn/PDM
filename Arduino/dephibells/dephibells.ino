@@ -60,10 +60,10 @@ void printConnectionInformation()
   Serial.println("Server inicializado");
 
   // Print the IP address
-  Serial.print("IP na rede do Node ");
-  Serial.print("http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("/");
+  //Serial.print("IP na rede do Node ");
+  //Serial.print("http://");
+  //Serial.print(WiFi.localIP());
+  //Serial.println("/");
 
 
 }
@@ -87,13 +87,13 @@ void readSensorData()
 char server[] = {"iot.eclipse.org"};
 int port = 1883;
 char topic[] = {"codifythings/dephybells"};
-char topicLed[] = {"codifythings/led"};
+//char topicLed[] = {"codifythings/controleLed"};
 
 void callback(char* topic, byte* payload, unsigned int length)
 {
   //Serial.println("[INFO] Tá chegando");
-  String payloadContent = String((char *)payload);
-  Serial.println("[INFO] Payload: " + payloadContent);
+  
+  Serial.println("[INFO] Payload: " + payload);
   turnLightsOnOff();
 }
 
@@ -144,7 +144,7 @@ void setup()
 
   if (pubSubClient2.connect("arduinoIoTClient"))
   {
-      pubSubClient2.subscribe(topicLed);
+      pubSubClient2.subscribe(topic);
       pisca(200, 8);
 
   }
