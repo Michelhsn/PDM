@@ -19,8 +19,9 @@ public class MQTTClient {
     private String mqttBroker = "tcp://iot.eclipse.org:1883";
     private String mqttTopic = "codifythings/dephybells";
     private String deviceId = "androidClient";
-
-
+    private String mqttTopicLed = "codifythings/led";
+    private String messageContent = "troca";
+    private String deviceIdLed = "androidClientLed";
     private MainActivity activity = null;
 
     public MQTTClient(MainActivity activity) {
@@ -43,6 +44,27 @@ public class MQTTClient {
         client.setCallback(new MqttEventCallback());
 
         client.subscribe(mqttTopic, 0);
+    }
+
+    public void publishToMQTT() throws MqttException {
+        // Request clean session in the connection options.
+        Log.i(TAG, "Setting Connection Options");
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setCleanSession(true);
+
+        Log.i(TAG, "Creating New Client");
+        MqttClient client = new MqttClient(mqttBroker, deviceIdLed,
+                new MemoryPersistence());
+        client.connect(options);
+        // Publish message to topic
+        Log.i(TAG, "Publishing to Topic");
+        MqttMessage mqttMessage =
+                new MqttMessage(messageContent.getBytes());
+        mqttMessage.setQos(2);
+        client.publish(mqttTopicLed, mqttMessage);
+        Log.i(TAG, "Publishing Complete");
+        Log.i(TAG, "Disconnecting from MQTT");
+        client.disconnect();
     }
 
     // Mensagem publicada no topic
@@ -76,5 +98,7 @@ public class MQTTClient {
                 Log.e(TAG, ex.getMessage());
             }
         }
+
+
     }
 }

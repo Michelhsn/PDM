@@ -46,6 +46,12 @@ public class Config extends AppCompatActivity {
                 if (position == 0){
                     Intent intent = new Intent(getApplicationContext(), Vibracao.class);
                     startActivity(intent);
+                } else if(position == 2){
+                    try {
+                        new MQTTClient(new MainActivity()).publishToMQTT();
+                    } catch (Exception ex) {
+
+                    }
                 }
             }
         });
