@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -29,18 +30,45 @@ public class MainActivity extends AppCompatActivity {
 
     // Para debug
     private static final String TAG = "MainActivity";
+    private int imagemAtual;
+    private int imagemAtual1;
+    private boolean ligado = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final int[] images = {R.drawable.bell_icon, R.drawable.bell_off};
 
-        updateView("");
+
+
+       final ImageView figuraLigar = (ImageView) findViewById(R.id.bell_icon);
+       updateView("");
 
         try
         {
             MQTTClient client = new MQTTClient(this);
             client.connectToMQTT();
+            figuraLigar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        new Config().publishToMQTT();
+                        imagemAtual++;
+                        imagemAtual = imagemAtual%images.length;
+                        figuraLigar.setImageResource(images[imagemAtual]);
+                        if (imagemAtual == 0){
+                            ligado = true;
+                        } else {
+                            ligado = false;
+                        }
+
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.getMessage());
+                    }
+                }
+            });
         }
         catch(Exception ex)
         {
@@ -49,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
     }
 
     /*public ArrayList<String> listaOpcoesIniciais(){
@@ -139,43 +168,58 @@ public class MainActivity extends AppCompatActivity {
     // Método padrão para criar notificação, adição do setVibrate
     public void createNotification(String notificationTitle,
                                    String notificationMessage) {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.drawable.bell_icon)
-                        .setContentTitle(notificationTitle)
-                        .setContentText(notificationMessage);
+       if(ligado){
+           NotificationCompat.Builder mBuilder =
+                   new NotificationCompat.Builder(getApplicationContext())
+                           .setSmallIcon(R.drawable.bell_icon)
+                           .setContentTitle(notificationTitle)
+                           .setContentText(notificationMessage);
 
 
-        // Ver forma melhor de usar vibrate
-        mBuilder.setVibrate(new long[] { 0000, 500, 500, 500, 500, 500, 500, 500, 500 });
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(getApplicationContext(),
-                MainActivity.class);
+           // Ver forma melhor de usar vibrate
+           SharedPreferences pref = getApplicationContext().getSharedPreferences("vibracaoPref", MODE_WORLD_READABLE); // 0 - for private mode
+           Integer tipoVibracao = pref.getInt("vibracaoAtual", -1);
+           if (tipoVibracao == 0){
+               mBuilder.setVibrate(new long[] { 0000, 3000 });
+           } else if (tipoVibracao == 1) {
+               mBuilder.setVibrate(new long[]{0000, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100});
+           } else if (tipoVibracao == 2){
+               mBuilder.setVibrate(new long[] { 0000, 500, 500, 500, 500, 500, 500, 500, 500 });
+           } else {
+               mBuilder.setVibrate(new long[] { 0000, 500, 500, 500, 500, 500, 500, 500, 500 });
+           }
 
-        // The stack builder object will contain an artificial back
-        // stack for the started Activity. This ensures that navigating
-        // backward from the Activity leads out of your application to the
-        // Home screen.
-        // Voltar pra home no back
-        TaskStackBuilder stackBuilder =
-                TaskStackBuilder.create(getApplicationContext());
 
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
+           // Creates an explicit intent for an Activity in your app
+           Intent resultIntent = new Intent(getApplicationContext(),
+                   MainActivity.class);
 
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
+           // The stack builder object will contain an artificial back
+           // stack for the started Activity. This ensures that navigating
+           // backward from the Activity leads out of your application to the
+           // Home screen.
+           // Voltar pra home no back
+           TaskStackBuilder stackBuilder =
+                   TaskStackBuilder.create(getApplicationContext());
 
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+           // Adds the back stack for the Intent (but not the Intent itself)
+           stackBuilder.addParentStack(MainActivity.class);
 
-       mBuilder.setContentIntent(resultPendingIntent);
+           // Adds the Intent that starts the Activity to the top of the stack
+           stackBuilder.addNextIntent(resultIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager)
-                getSystemService(Context.NOTIFICATION_SERVICE);
+           PendingIntent resultPendingIntent =
+                   stackBuilder.getPendingIntent(0,
+                           PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(100, mBuilder.build());
+           mBuilder.setContentIntent(resultPendingIntent);
+
+           NotificationManager mNotificationManager = (NotificationManager)
+                   getSystemService(Context.NOTIFICATION_SERVICE);
+
+           // mId allows you to update the notification later on.
+           mNotificationManager.notify(100, mBuilder.build());
+       }
+
     }
 }

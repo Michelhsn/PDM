@@ -2,6 +2,7 @@ package com.example.dephybells;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,12 @@ public class Vibracao extends AppCompatActivity {
         listaConfig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("vibracaoPref", MODE_WORLD_READABLE); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("vibracaoAtual", position);
+                editor.commit();
+
                 if (position == 0){
 
 

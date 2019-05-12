@@ -105,7 +105,7 @@ public class Config extends AppCompatActivity {
     public void publishToMQTT() throws MqttException {
         // clean session
         // evitar reconectar caso já esteja aberta
-        if (client.isConnected()){
+        if (client != null && client.isConnected()){
             MqttMessage mqttMessage =
                     new MqttMessage(messageContent.getBytes());
 
