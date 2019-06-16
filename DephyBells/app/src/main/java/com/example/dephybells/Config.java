@@ -92,7 +92,7 @@ public class Config extends AppCompatActivity {
         ArrayList<String> dados = new ArrayList<String>();
         dados.add("Vibração");
         dados.add("Iluminação");
-        dados.add("Liga / Desliga");
+        dados.add("Abrir/Fechar Porta");
         return dados;
     }
 

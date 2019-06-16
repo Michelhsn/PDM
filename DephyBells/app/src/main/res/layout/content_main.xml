@@ -26,9 +26,8 @@
 
     <TextView
         android:id="@+id/updated_field"
-        android:textSize="25dp"
         android:layout_width="295dp"
-        android:layout_height="150dp"
+        android:layout_height="113dp"
         android:layout_below="@+id/bell_icon"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -36,13 +35,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/a_campainha_da_sua_casa_est_tocando"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bell_icon"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintVertical_bias="0.962" />
 
     <!--<Button
         android:id="@+id/buttonConfig"
