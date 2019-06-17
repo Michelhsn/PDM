@@ -157,8 +157,11 @@ public class MQTTClient extends Service implements MqttCallback {
         try {
 
             DateFormat df = DateFormat.getDateTimeInstance();
-            String sensorMessage = new String(mqttMessage.getPayload()) + " acionada em " +
-                    df.format(new Date());
+            String dia = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            String horario = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+            final String sensorMessage = new String(mqttMessage.getPayload()) + " acionada em " +
+                    dia + " às " + horario;
 
 
             createNotification("ALERTA DE CAMPAINHA!", sensorMessage);
